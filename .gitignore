@@ -22,3 +22,8 @@ local.properties
 .target
 # TeXlipse plugin
 .texlipse
+
+.Python
+env/
+
+.DS_Store
