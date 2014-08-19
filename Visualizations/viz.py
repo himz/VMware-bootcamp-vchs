@@ -14,17 +14,22 @@ def index():
 
 @app.route("/apis")
 def apis():
-    pass
+    return render_template('tl_apis.html')
 
 
 @app.route("/requests")
 def servers():
-    pass
+    return render_template('tl_requests.html')
 
 
 @app.route("/clients")
 def clients():
-    pass
+    return render_template('tl_clients.html')
+
+
+@app.route("/custom")
+def custom():
+    return render_template('tl_custom.html')
 
 
 if __name__ == "__main__":
