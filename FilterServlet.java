@@ -41,17 +41,17 @@ public class FilterServlet extends HttpServlet {
 			Client c = uaParser.parse(req.getHeader("user-agent"));
 			Calendar cal = Calendar.getInstance();
 
-			message += "\"year\":\"" + cal.get(Calendar.YEAR) + "\"\n";
-			message += "\"month\":\"" + (cal.get(Calendar.MONTH) + 1) + "\"\n"; //+1 because jan is 0
-			message += "\"day\":\"" + cal.get(Calendar.DAY_OF_MONTH) + "\"\n";
-			message += "\"hour\":\"" + cal.get(Calendar.HOUR_OF_DAY) + "\"\n";
-			message += "\"min\":\"" + cal.get(Calendar.MINUTE) + "\"\n";
-			message += "\"sec\":\"" + cal.get(Calendar.SECOND) + "\"\n";
-			message += "\"browser\":\"" + c.userAgent.family + "\"\n";
-			message += "\"OS\":\"" + c.os.family + "\"\n";
-			message += "\"http_verb\":\"" + req.getMethod() + "\"\n";
-			message += "\"api_path\":\"" + req.getRequestURL() + "\"\n";
-			message += "\"client_ip\":\"" + req.getRemoteAddr() + "\"\n";
+			message += "\"year\":\"" + cal.get(Calendar.YEAR) + "\",\n";
+			message += "\"month\":\"" + (cal.get(Calendar.MONTH) + 1)  + "\",\n"; //+1 because jan is 0
+			message += "\"day\":\"" + cal.get(Calendar.DAY_OF_MONTH)  + "\",\n";
+			message += "\"hour\":\"" + cal.get(Calendar.HOUR_OF_DAY)  + "\",\n";
+			message += "\"min\":\"" + cal.get(Calendar.MINUTE)  + "\",\n";
+			message += "\"sec\":\"" + cal.get(Calendar.SECOND)  + "\",\n";
+			message += "\"browser\":\"" + c.userAgent.family  + "\",\n";
+			message += "\"OS\":\"" + c.os.family  + "\",\n";
+			message += "\"http_verb\":\"" + req.getMethod()  + "\",\n";
+			message += "\"api_path\":\"" + req.getRequestURL()  + "\",\n";
+			message += "\"client_ip\":\"" + req.getRemoteAddr()  + "\",\n";
 			message += "\"response_time\":\"100\"\n";
 
 			message += "}";
