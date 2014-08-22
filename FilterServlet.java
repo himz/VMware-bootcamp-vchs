@@ -1,5 +1,6 @@
 // Import required java libraries
 import java.util.Enumeration;
+import java.util.Calendar;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -7,6 +8,9 @@ import javax.servlet.http.*;
 import com.rabbitmq.client.ConnectionFactory; 
 import com.rabbitmq.client.Connection; 
 import com.rabbitmq.client.Channel; 
+
+import ua_parser.Parser;
+import ua_parser.Client;
 
 // Extend HttpServlet class
 public class FilterServlet extends HttpServlet {
@@ -32,17 +36,29 @@ public class FilterServlet extends HttpServlet {
   // create the JSON-like string that is sent to RabbitMQ
   private String formMessage(HttpServletRequest req) {
     String message = "{\n";
-    Enumeration<String> headerNames = req.getHeaderNames();
-    while (headerNames.hasMoreElements()) {
-        String headerName = headerNames.nextElement();
-	message += "\"" + headerName + "\":\""; 
-        Enumeration<String> headers = req.getHeaders(headerName);
-        while (headers.hasMoreElements()) {
-		message += headers.nextElement();
-        }
-	message += "\"\n";
+    try {
+      // Get an UserAgentStringParser and analyze the requesting client
+      Parser uaParser = new Parser();
+      Client c = uaParser.parse(req.getHeader("user-agent"));
+      Calendar cal = Calendar.getInstance(); 
+
+      message += "\"year\":\"" + cal.get(Calendar.YEAR) + "\"\n"; 
+      message += "\"month\":\"" + (cal.get(Calendar.MONTH) + 1 ) + "\"\n"; // +1 because jan is 0  
+      message += "\"day\":\"" + cal.get(Calendar.DAY_OF_MONTH) + "\"\n"; 
+      message += "\"hour\":\"" + cal.get(Calendar.HOUR_OF_DAY) + "\"\n"; 
+      message += "\"min\":\"" + cal.get(Calendar.MINUTE) + "\"\n"; 
+      message += "\"sec\":\"" + cal.get(Calendar.SECOND) + "\"\n"; 
+      message += "\"browser\":\"" + c.userAgent.family + "\"\n";
+      message += "\"OS\":\"" + c.os.family + "\"\n"; 
+      message += "\"http_verb\":\"" + req.getMethod() + "\"\n"; 
+      message += "\"api_path\":\"" + req.getRequestURL() + "\"\n"; 
+      message += "\"client_ip\":\"" + req.getRemoteAddr() + "\"\n"; 
+      message += "\"response_time\":\"100\"\n"; 
+ 
+      message += "}";
+    } catch (Exception e) {
+	message = e.toString();
     }
-    message += "\n}";
     return message;
   }
 
@@ -53,11 +69,13 @@ public class FilterServlet extends HttpServlet {
       // Set response content type
       response.setContentType("text/html");
  
+      sendToRabbitMQ(formMessage(request));	
+
       // Actual logic goes here.
       PrintWriter out = response.getWriter();
       out.println("<h1>" + request.getRequestURL() + "</h1>");
+      out.println("<h1>" + request.getHeader("User-Agent") + "</h1>");
       
-      sendToRabbitMQ(formMessage(request));	
   }
   
   public void destroy()
