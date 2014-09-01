@@ -1,9 +1,12 @@
-import pymongo
+import sys
+import os.path
 
 
-def get_records():
-    pass
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from Visualizations import mongo_config
 
 
-def filter_records(param):
-    pass
+collection = mongo_config['collection']
+
+def filter_records(params):
+    return collection.find(fields=params)
