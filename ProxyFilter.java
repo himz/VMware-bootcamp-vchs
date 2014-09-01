@@ -15,11 +15,14 @@ import ua_parser.Client;
 // Extend Filter class
 public class ProxyFilter implements Filter {
 
-	private final static String QUEUE_NAME = "hello";
+	private String rabbitMQName;
+	private String rabbitMQServer;
 	FilterConfig filterConfig = null;
 
 	public void init(FilterConfig filterConfig) throws ServletException {
 		this.filterConfig = filterConfig;
+		rabbitMQName = filterConfig.getInitParameter("rabbitmq-name");
+		rabbitMQServer = filterConfig.getInitParameter("rabbitmq-server");
 	}
 
 	public void destroy() {
@@ -27,12 +30,12 @@ public class ProxyFilter implements Filter {
 
 	private void sendToRabbitMQ(String message) throws java.io.IOException {
 		ConnectionFactory factory = new ConnectionFactory();
-		factory.setHost("localhost");
+		factory.setHost(rabbitMQServer);
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
 
-		channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-		channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+		channel.queueDeclare(rabbitMQName, false, false, false, null);
+		channel.basicPublish("", rabbitMQName, null, message.getBytes());
 		channel.close();
 		connection.close();
 	}

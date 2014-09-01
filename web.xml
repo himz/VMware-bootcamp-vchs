@@ -14,6 +14,12 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
+
+
+ This is the filter that will intercept all requests and do the processing.
+ The owner of the webserver will copy the <filter> and <filter-mapping> parts onto his web.xml file.
+  The owner of the webserver should create the servelet mapping below.
+  For our purposes I am letting the FilterServlet be a stand-in.
 -->
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
@@ -27,10 +33,28 @@
   <description>
      Welcome to Tomcat
   </description>
- <servlet>
+  
+   <filter>
+        <filter-name>ProxyFilter</filter-name>
+	<filter-class>ProxyFilter</filter-class>
+        <init-param>
+		<param-name>rabbitmq-server</param-name>
+		<param-value>localhost</param-value>
+        </init-param>
+        <init-param>
+		<param-name>rabbitmq-name</param-name>
+		<param-value>hello</param-value>
+        </init-param>
+   </filter>
+   <filter-mapping>
+	<filter-name>ProxyFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+   </filter-mapping>
+
+   <servlet>
         <servlet-name>FilterServlet</servlet-name>
         <servlet-class>FilterServlet</servlet-class>
-    </servlet>
+   </servlet>
  
     <servlet-mapping>
         <servlet-name>FilterServlet</servlet-name>
