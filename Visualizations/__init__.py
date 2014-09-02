@@ -20,8 +20,8 @@ def set_mongo_config():
     connection_config = read_config()
     mongo_config['client'] = MongoClient(connection_config['host'],
                                          connection_config['port'])
-    mongo_config['db'] = mongo_config['client'][config_data['db']]
-    mongo_config['collection'] = mongo_config['db'][config_data['collection']]
+    mongo_config['db'] = mongo_config['client'][connection_config['db']]
+    mongo_config['collection'] = mongo_config['db'][connection_config['collection']]
 
 
 set_mongo_config()
