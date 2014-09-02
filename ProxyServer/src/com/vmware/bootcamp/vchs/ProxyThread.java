@@ -17,7 +17,7 @@ public class ProxyThread extends Thread {
         //send request to server
         //get response from server
         //send response to user
-
+    	//System.out.println("in run");
         try {
             DataOutputStream out =
 		new DataOutputStream(socket.getOutputStream());
@@ -27,6 +27,7 @@ public class ProxyThread extends Thread {
             String inputLine, outputLine;
             int cnt = 0;
             String urlToCall = "";
+            //System.out.println("Here");
             ///////////////////////////////////
             //begin get request from client
             while ((inputLine = in.readLine()) != null) {
@@ -40,6 +41,7 @@ public class ProxyThread extends Thread {
                 if (cnt == 0) {
                     String[] tokens = inputLine.split(" ");
                     urlToCall = tokens[1];
+                    //urlToCall = urlToCall.substring(1);
                     //can redirect this to output log
                     System.out.println("Request for : " + urlToCall);
                 }
@@ -76,15 +78,15 @@ public class ProxyThread extends Thread {
                 // Get the response
                 InputStream is = null;
                 HttpURLConnection huc = (HttpURLConnection)conn;
-                if (conn.getContentLength() > 0) {
+                //if (conn.getContentLength() > 0) {
                     try {
                         is = conn.getInputStream();
                         rd = new BufferedReader(new InputStreamReader(is));
                     } catch (IOException ioe) {
-                        System.out.println(
-				"********* IO EXCEPTION **********: " + ioe);
+//                        System.out.println(
+//				"********* IO EXCEPTION **********: " + ioe);
                     }
-                }
+               // }
                 //end send request to server, get response from server
                 ///////////////////////////////////
 
@@ -103,7 +105,7 @@ public class ProxyThread extends Thread {
                 ///////////////////////////////////
             } catch (Exception e) {
                 //can redirect this to error log
-                System.err.println("Encountered exception: " + e);
+                //System.err.println("Encountered exception: " + e);
                 //encountered error - just send nothing back, so
                 //processing can continue
                 out.writeBytes("");
