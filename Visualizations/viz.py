@@ -1,7 +1,8 @@
 from flask import Flask
 from flask import render_template
 
-from mongo_utils import get_records
+import utils
+import mongo_utils
 
 
 app = Flask(__name__)
@@ -17,9 +18,22 @@ def apis():
     return render_template('tl_apis.html')
 
 
+@app.route("/apis/most-used")
+def get_most_used_apis():
+    data = utils.get_api_usage_json()
+    return render_template('tl_apis_most_used.html', data=data)
+
+
 @app.route("/requests")
 def servers():
     return render_template('tl_requests.html')
+
+
+@app.route("/requests/response-time-verb")
+def get_response_verb():
+    data = {}
+    data['records'] = filter_records(['http_verb', 'response_time'])
+    return render_template('tl_requests_response_time_verb.html', data=data)
 
 
 @app.route("/clients")
@@ -33,4 +47,4 @@ def custom():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=8090)
