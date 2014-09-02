@@ -43,7 +43,8 @@ else
 			$ua = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.32 (KHTML, like Gecko) Chromium/25.0.1349.2 Chrome/25.0.1349.2 Safari/537.32 Epiphany/3.8.2";
                 fi
         fi
-		
+	
+	echo $ua;	
 	count=0;
 	url="$1://$2:$3/$4"
 	echo $url
