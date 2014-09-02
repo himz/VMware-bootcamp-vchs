@@ -13,20 +13,15 @@ def index():
     return render_template('tl_index.html')
 
 
-@app.route("/apis")
-def apis():
-    return render_template('tl_apis.html')
-
-
-@app.route("/apis/most-used")
+@app.route("/api-usage")
 def get_most_used_apis():
     data = utils.get_api_usage_json()
     return render_template('tl_apis_most_used.html', data=data)
 
 
-@app.route("/requests")
-def servers():
-    return render_template('tl_requests.html')
+@app.route("/browser-usage")
+def get_browser_distribution():
+    return render_template('tl_browser_usage.html')
 
 
 @app.route("/requests/response-time-verb")
@@ -36,14 +31,9 @@ def get_response_verb():
     return render_template('tl_requests_response_time_verb.html', data=data)
 
 
-@app.route("/clients")
-def clients():
-    return render_template('tl_clients.html')
-
-
-@app.route("/custom")
-def custom():
-    return render_template('tl_custom.html')
+@app.route("/os-usage")
+def get_os_distribution():
+    return render_template('tl_os_usage.html')    
 
 
 if __name__ == "__main__":
