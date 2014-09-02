@@ -50,7 +50,7 @@ else
 	echo $url
 	while [ $count -lt $6 ]
 	do
-		curl -i -H "Accept: application/json" --user-agent $ua -X $5 $url > log.txt
+		curl -i -H "Accept: application/json" --user-agent "$ua" -X $5 $url > log.txt
 		echo " "
 		sleep 0.025;
 		((count+=1));
