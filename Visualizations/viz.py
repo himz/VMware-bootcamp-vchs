@@ -21,7 +21,8 @@ def get_most_used_apis():
 
 @app.route("/browser-usage")
 def get_browser_distribution():
-    return render_template('tl_browser_usage.html')
+    data = utils.get_browser_usage_json()
+    return render_template('tl_browser_usage.html', data=data)
 
 
 @app.route("/requests/response-time-verb")

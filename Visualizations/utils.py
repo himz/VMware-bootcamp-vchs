@@ -1,15 +1,14 @@
 import mongo_utils
 
-data =  {'vApp/power/action/powerOn': 345,
+
+def sum_api_paths(api_usage_data):
+    api_usage_data =  {'vApp/power/action/powerOn': 345,
          'vApp/power/action/powerOff': 585,
          'vApp/power/action/reset': 794,
          'admin/extension/action/registerserver': 696,
          'admin/extension/action/power/registerserver': 636,
         }
-
-
-def sum_api_paths(data):
-    return data
+    return api_usage_data
 
 
 def process_split_paths(current_dict, paths, freq):
@@ -28,12 +27,19 @@ def process_split_paths(current_dict, paths, freq):
 
 
 def get_api_usage_json():
+    api_usage_data =  {'vApp/power/action/powerOn': 345,
+         'vApp/power/action/powerOff': 585,
+         'vApp/power/action/reset': 794,
+         'admin/extension/action/registerserver': 696,
+         'admin/extension/action/power/registerserver': 636,
+        }
+
     root_data = {}
     root_data["name"] = "root"
     root_data["children"] = []
     # data = mongo_utils.filter_records('api_path')
     # data = sum_api_paths(data)
-    for api_path, freq in data.items():
+    for api_path, freq in api_usage_data.items():
         split_paths = api_path.split('/')
         current_dict = root_data
 
@@ -57,3 +63,14 @@ def get_api_usage_json():
             inner_dict = process_split_paths(current_dict, split_paths, freq)
             current_dict["children"].append(inner_dict)
     return root_data
+
+
+def get_browser_usage_json():
+    browser_usage_data = {'data': [
+            {'browser':'Chrome', 'total':'678'},
+            {'browser':'Mozilla', 'total':'376'},
+            {'browser':'Safari', 'total':'123'},
+            {'browser':'IE', 'total':'23'}
+        ]
+    }
+    return browser_usage_data
