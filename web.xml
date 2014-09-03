@@ -58,6 +58,10 @@
  
     <servlet-mapping>
         <servlet-name>FilterServlet</servlet-name>
-        <url-pattern>/api/*</url-pattern>
+        <url-pattern>/vApp/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilterServlet</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
     </servlet-mapping>
 </web-app>
