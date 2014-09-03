@@ -6,6 +6,10 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Browser Usage</h1>
+                    <script>
+                        document.getElementById("dash-id").className = "";
+                        document.getElementById("browser-usage-id").className = "active";
+                    </script>
                     <div id="viz">
                         {% include 'tl_browser_usage_viz.html' %}
                     </div>
