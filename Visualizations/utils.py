@@ -84,3 +84,8 @@ def get_os_usage_json():
         ]
     }
     return os_usage_data
+
+
+def get_api_response_times():
+    api_response_data = {}
+    return api_response_data

@@ -35,7 +35,13 @@ def get_response_verb():
 @app.route("/os-usage")
 def get_os_distribution():
     data = utils.get_os_usage_json()
-    return render_template('tl_os_usage.html', data=data)    
+    return render_template('tl_os_usage.html', data=data)
+
+
+@app.route("/api-response")
+def get_api_response_times():
+    data = utils.get_api_response_times()
+    return render_template('tl_api_response_times.html', data=data)
 
 
 if __name__ == "__main__":
