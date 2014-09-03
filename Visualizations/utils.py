@@ -74,3 +74,13 @@ def get_browser_usage_json():
         ]
     }
     return browser_usage_data
+
+
+def get_os_usage_json():
+    os_usage_data = {'data': [
+            {'os':'Windows', 'total':'678'},
+            {'os':'Linux', 'total':'376'},
+            {'os':'Mac', 'total':'123'}
+        ]
+    }
+    return os_usage_data

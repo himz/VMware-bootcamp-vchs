@@ -34,7 +34,8 @@ def get_response_verb():
 
 @app.route("/os-usage")
 def get_os_distribution():
-    return render_template('tl_os_usage.html')    
+    data = utils.get_os_usage_json()
+    return render_template('tl_os_usage.html', data=data)    
 
 
 if __name__ == "__main__":
