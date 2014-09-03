@@ -1,6 +1,7 @@
 // Import required java libraries
 import java.util.Enumeration;
 import java.util.Calendar;
+import java.util.Date;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -47,14 +48,9 @@ public class ProxyFilter implements Filter {
 			// Get an UserAgentStringParser and analyze the requesting client
 			Parser uaParser = new Parser();
 			Client c = uaParser.parse(req.getHeader("user-agent"));
-			Calendar cal = Calendar.getInstance();
+			Date date = new Date();
 
-			message += "\"year\":\"" + cal.get(Calendar.YEAR) + "\",\n";
-			message += "\"month\":\"" + (cal.get(Calendar.MONTH) + 1)  + "\",\n"; //+1 because jan is 0
-			message += "\"day\":\"" + cal.get(Calendar.DAY_OF_MONTH)  + "\",\n";
-			message += "\"hour\":\"" + cal.get(Calendar.HOUR_OF_DAY)  + "\",\n";
-			message += "\"min\":\"" + cal.get(Calendar.MINUTE)  + "\",\n";
-			message += "\"sec\":\"" + cal.get(Calendar.SECOND)  + "\",\n";
+			message += "\"timestamp\":\"" + date.getTime()  + "\",\n";
 			message += "\"browser\":\"" + c.userAgent.family  + "\",\n";
 			message += "\"OS\":\"" + c.os.family  + "\",\n";
 			message += "\"http_verb\":\"" + req.getMethod()  + "\",\n";
