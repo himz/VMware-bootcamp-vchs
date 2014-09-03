@@ -38,9 +38,6 @@ var svg = d3.select("#viz").append("svg")
 var data = {{ data|tojson}}
 data = data['data']
 
-console.log('hi')
-console.log(data)
-
 data.forEach(function(d) {
   d.population = +d.total;
 });
