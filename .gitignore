@@ -32,3 +32,4 @@ env/
 # Mongodb data file
 data/db
 log.txt
+.config
