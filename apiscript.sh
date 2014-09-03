@@ -40,11 +40,10 @@ else
 			ua="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.59.8 (KHTML, like Gecko) Version/5.1.9 Safari/534.59.8";
                 elif [ "$8" == "OS3" ]
                 then
-			ua="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.32 (KHTML, like Gecko) Chromium/25.0.1349.2 Chrome/25.0.1349.2 Safari/537.32 Epiphany/3.8.2";
+			ua="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.32 (KHTML, like Gecko) Version/5.1.9 Safari/537.32";
                 fi
         fi
-	
-	echo $ua;	
+		
 	count=0;
 	url="$1://$2:$3/$4"
 	echo $url
