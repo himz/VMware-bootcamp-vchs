@@ -34,11 +34,11 @@ public class FilterServlet extends HttpServlet {
 		int randomNumber = rng.nextInt(100);
 		String URL = new String (request.getRequestURL());
 		try {
-			if(URL.equals("http://localhost:8080/vApp/power/action/powerOn")) { 
+			if(URL.equals("http://localhost:8080/vApp/power/work/powerOn")) { 
 				Thread.sleep(randomNumber);
-			} else if(URL.equals("http://localhost:8080/vApp/power/action/powerOff")) { 
+			} else if(URL.equals("http://localhost:8080/vApp/power/work/powerOff")) { 
 				Thread.sleep(randomNumber/2);
-			} else if(URL.equals("http://localhost:8080/vApp/power/action/reset")) { 
+			} else if(URL.equals("http://localhost:8080/vApp/power/work/reset")) { 
 				Thread.sleep(randomNumber*2);
 			} else if(URL.equals("http://localhost:8080/admin/extension/action/register")) { 
 				Thread.sleep(randomNumber*5);
