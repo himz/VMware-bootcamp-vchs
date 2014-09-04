@@ -1,51 +1,71 @@
 #!/usr/bin/perl
-if($#ARGV != 0) {
-	print "Usage: $0 <numRecords>\n";
+if($#ARGV < 0) {
+	print "Usage: $0 <numRecords> [<numDays> <gapSeconds>]\n";
+	print "Creates #numrecords with timestamps + or - numDays relative to the current time and are spaced gapSeconds apart\n";
 	exit;
 }
+
+#numdays before/after today
+my($numDays) = 0;
+if($#ARGV  >= 1) {
+	$numDays = $ARGV[1];
+}
+my($gapSeconds) = 1;
+if($#ARGV  >= 2) {
+	$gapSeconds = $ARGV[1];
+}
+
 
 # generate random data for mongoDB 
 # Format
 #{
-#    "timestamp":"YYYY/MM/DD/HH/MM/SS",
+#    "timestamp":"14358670023",
 #    "browser":"chrome/safari/firefox/ie/other",
 #    "OS":"",
-#    "user":"",
-#    "tenant":"",
 #    "http_verb":"",
 #    "api_path":"",
-#    "api_identifier":"",
 #    "client_ip":"",
 #    "response_time":"",
-#    "response_code":"",
-#    "server_id":""
 #}
 
 my(@browsers) = (chrome,safari,firefox,ie,other);
-my(@OSs) = (Mac,Windows,Linux,other);
-my(@users) = (Varun,Prashanth,Sabs,Himanshu);
+my(@OSs) = ("Mac OS X","Windows 8.1",Linux,other);
 my(@verbs) = (POST,GET,HEAD);
-my(@apis) = (A1,A2,A3,A4,A5);
+my(@apis) = ("vApp/power/action/powerOn", "vApp/power/action/powerOff", "vApp/power/action/reset", "admin/extension/action/register", "admin/extension/action/deregister","admin/extension/action/getAdmin");
 
+#offset by correct number of days
+my($timeStamp) = time() + $numDays * 3600 * 24;
 
+print "Generating data with initial timestamp:$timestamp and gapSeconds:$gapSeconds\n";
 for(my($i) = 0; $i < $ARGV[0]; $i++) {
 
-	($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime();
+	$timeStamp += $gapSeconds;
 	my($browser) = $browsers[int(rand($#browser))];
 	my($OS) = $OSs[int(rand($#OSs))];
-	my($user) = $users[int(rand($#users))];
 	my($verb) = $verbs[int(rand($#verbs))];
-	my($api) = $apis[int(rand($#api))];
+	my($api) = $apis[int(rand($#apis))];
 	my($rt) = int(rand(100));
+	if($api =~ /powerOn/) {
+	} elsif($api =~ /poweroff/) {
+		$rt /= 2;
+	} elsif($api =~ /reset/) {
+		$rt *= 2;
+	} elsif($api =~ /action.register/) {
+		$rt *= 5;
+	} elsif($api =~ /action.deregister/) {
+		$rt /= 5;
+	} elsif($api =~ /getAdmin/) {
+		$rt /= 10;
+	}
 
 	print "{\n";
 
-	printf( "\"timestamp\":\"%04d/%02d/%02d/%02d/%02d/%02d\",\n",$year+1900,$mon,$mday,$hour,$min,$sec);
+	printf( "\"timestamp\":\"%d\"\n",$timeStamp);
 	print "\"browser\":\"$browser\"\n";
 	print "\"OS\":\"$OS\"\n";
-	print "\"users\":\"$user\"\n";
 	print "\"http_verb\":\"$verb\"\n";
-	print "\"api_path\":\"$api\"\n";
+	print "\"api_path\":\"http://localhost:8080/${api}\"\n";
+	print "\"client_ip\":\"0:0:0:0:0:0:0:1\"\n";
 	print "\"response_time\":\"$rt\"\n";
 
 	print "}\n";
