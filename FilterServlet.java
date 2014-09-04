@@ -46,6 +46,12 @@ public class FilterServlet extends HttpServlet {
 				Thread.sleep(randomNumber/5);
 			} else if(URL.equals("http://localhost:8080/admin/extension/action/getAdmin")) {
 				Thread.sleep(randomNumber/10);
+			} else if(URL.equals("http://localhost:8080/vApp/action/relocate")) {
+				Thread.sleep(randomNumber/10);
+			} else if(URL.equals("http://localhost:8080/vApp/action/consolidate")) {
+				Thread.sleep(randomNumber/10);
+			} else {
+				Thread.sleep(randomNumber);
 			}
 		} catch(Exception e) {
 			out.println(e);
