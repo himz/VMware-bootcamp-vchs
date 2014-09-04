@@ -44,5 +44,11 @@ def get_api_response_times():
     return render_template('tl_api_response_times.html', data=data)
 
 
+@app.route("/verb-response")
+def get_verb_response_times():
+    data = utils.get_verb_response_times()
+    return render_template('tl_verb_response_times.html', data=data)
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=8090)
