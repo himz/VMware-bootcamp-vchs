@@ -63,20 +63,20 @@ def get_api_usage_json():
 
 
 def get_browser_usage_json():
-    browser_usage_data = {'data': [
-            {'browser':'Chrome', 'total':'678'},
-            {'browser':'Mozilla', 'total':'376'},
-            {'browser':'Safari', 'total':'123'},
-            {'browser':'IE', 'total':'23'}
-        ]
-    }
+    # browser_usage_data = {'data': [
+    #         {'browser':'Chrome', 'total':'678'},
+    #         {'browser':'Mozilla', 'total':'376'},
+    #         {'browser':'Safari', 'total':'123'},
+    #         {'browser':'IE', 'total':'23'}
+    #     ]
+    # }
 
-    # mongo_browser_data = mongo_utils.filter_records(['browser'])
-    # browser_usage_data = defaultdict(int)
-    # for record in mongo_browser_data:
-    #     browser_usage_data[record['browser'].lower().strip()] += 1
+    mongo_browser_data = mongo_utils.filter_records(['browser'])
+    browser_usage_data = defaultdict(int)
+    for record in mongo_browser_data:
+        browser_usage_data[record['browser'].lower().strip()] += 1
 
-    # browser_usage_data = {'data': [{'browser': str(k), 'total': v} for k, v in browser_usage_data.items()]}
+    browser_usage_data = {'data': [{'browser': str(k), 'total': v} for k, v in browser_usage_data.items()]}
 
     return browser_usage_data
 
