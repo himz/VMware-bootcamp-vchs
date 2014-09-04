@@ -44,6 +44,7 @@
       .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
 
   var json = {{data|tojson}}
+  console.log(json);
   createVisualization(json);
 
   // Main function to draw and set up the visualization, once we have the data.
