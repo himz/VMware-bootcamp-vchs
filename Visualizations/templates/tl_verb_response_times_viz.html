@@ -86,12 +86,12 @@
     .attr('class', 'd3-tip')
     .offset([-10, 0])
     .html(function(d) {
-      return "<strong>API Path: " + d.api_path + "</strong></br><strong>Avg Response: " + d.avg_response_time + "</strong>";
+      return "<strong>HTTP verb: " + d.verb + "</strong></br><strong>Avg Response: " + d.avg_response_time + "</strong>";
     });
 
   svg.call(tip);
 
-  x.domain(data.map(function(d) { return d.api_path; }));
+  x.domain(data.map(function(d) { return d.verb; }));
   y.domain([0, d3.max(data, function(d) { return d.avg_response_time; })]);
 
   svg.append("g")
@@ -113,7 +113,7 @@
       .data(data)
       .enter().append("rect")
       .attr("class", "bar")
-      .attr("x", function(d) { return x(d.api_path); })
+      .attr("x", function(d) { return x(d.verb); })
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.avg_response_time); })
       .attr("height", function(d) { return height - y(d.avg_response_time);})

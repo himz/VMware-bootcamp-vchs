@@ -22,7 +22,13 @@ public class Recv {
                         String message = new String(delivery.getBody());
                         System.out.println(" [x] Received '" + message + "'");
                         /* Store in Mongo DB */
-                        db.storeInMongoDB(message);
+                        db.storeInMongoDB(getApi(message));
                 }
+        }
+        
+        public static String getApi(String message) {
+        	String temp1 = message.replace("http://localhost:8080/", "");
+        	       	
+        	return temp1;
         }
 }

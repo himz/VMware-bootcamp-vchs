@@ -108,3 +108,16 @@ def get_api_response_times():
 
     api_response_data = {'data': [{'api_path': api_path, 'avg_response_time': avg_response_time} for api_path, avg_response_time in api_response_data.items()]}  
     return api_response_data
+
+
+def get_verb_response_times():
+    mongo_response_data = mongo_utils.filter_records(['http_verb', 'response_time'])
+    verb_response_data = defaultdict(list)
+    for record in mongo_response_data:
+        verb_response_data[record['http_verb']].append(float(record['response_time']))
+
+    for verb, response_times in verb_response_data.items():
+        verb_response_data[verb] = sum(response_times)/len(response_times)
+
+    verb_response_data = {'data':[{'verb': verb, 'avg_response_time': avg_response_time} for verb, avg_response_time in verb_response_data.items()]}
+    return verb_response_data
