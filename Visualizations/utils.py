@@ -12,8 +12,7 @@ def sum_api_paths(api_usage_data):
     mongo_api_data = defaultdict(int)
     for record in api_usage_data:
         mongo_api_data[record['api_path']] += 1
-    # return mongo_api_data
-    return {'A1/A2':154, 'A1/A3':256, 'A4/A5': 323, 'A4/A6': 980}
+    return mongo_api_data
 
 
 def process_split_paths(current_dict, paths, freq):
@@ -75,6 +74,7 @@ def get_browser_usage_json():
     browser_usage_data = defaultdict(int)
     for record in mongo_browser_data:
         browser_usage_data[record['browser'].lower().strip()] += 1
+
     browser_usage_data = {'data': [{'browser': str(k), 'total': v} for k, v in browser_usage_data.items()]}
     return browser_usage_data
 
@@ -90,16 +90,19 @@ def get_os_usage_json():
     os_usage_data = defaultdict(int)
     for record in mongo_os_data:
         os_usage_data[record['OS'].lower().strip()]
+
     os_usage_data = {'data': [{'os': str(k), 'total': v} for k, v in os_usage_data.items()]}
     return os_usage_data
 
 
 def get_api_response_times():
-    # Check the format of the response time returned
     mongo_response_data = mongo_utils.filter_records(['api_path', 'response_time'])
     api_response_data = defaultdict(list)
     for record in mongo_response_data:
         api_response_data[record['api_path']].append(float(record['response_time']))
-    for k, v in api_response_data:
-        api_response_data[k] = sum(v)/len(v)
+
+    for api_path, response_times in api_response_data.items():
+        api_response_data[api_path] = sum(response_times)/len(response_times)
+
+    api_response_data = {'data': [{'api_path': api_path, 'avg_response_time': avg_response_time} for api_path, avg_response_time in api_response_data.items()]}  
     return api_response_data
