@@ -126,7 +126,7 @@ def get_verb_response_times():
 
 def refresh_summary():
     mongo_summary_data = mongo_utils.filter_records(['browser', 'OS', 'response_time'])
-    if not mongo_summary_data:
+    if not mongo_summary_data.count():
         summary_data = {}
         summary_data['requests'] = 0
         summary_data['responses'] = '0.0'
