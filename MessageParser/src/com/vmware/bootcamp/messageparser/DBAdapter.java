@@ -31,6 +31,7 @@ public class DBAdapter {
 			}
  
 			System.out.println("Done");
+			mongo.close();
  
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
