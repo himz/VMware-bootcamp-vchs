@@ -24,14 +24,14 @@
                                     <i class="fa fa-code fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>Million API Requests</div>
+                                    <div class="huge">{{ data.requests }}</div>
+                                    <div>API Requests</div>
                                 </div>
                             </div>
                         </div>
                         <a href="/api-usage">
                             <div class="panel-footer">
-                                <span class="pull-left">283 reqs/sec</span>
+                                <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -46,14 +46,14 @@
                                     <i class="fa fa-clock-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">83 ms</div>
-                                    <div>Avg Response Time</div>
+                                    <div class="huge">{{ data.responses }}</div>
+                                    <div>Response Time (ms)</div>
                                 </div>
                             </div>
                         </div>
                         <a href="/api-response">
                             <div class="panel-footer">
-                                <span class="pull-left">52 ms Best Response Time</span>
+                                <span class="pull-left">View Details</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -68,14 +68,14 @@
                                     <i class="fa fa-globe fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">7</div>
+                                    <div class="huge">{{ data.browsers }}</div>
                                     <div> Browsers Used</div>
                                 </div>
                             </div>
                         </div>
                         <a href="/browser-usage">
                             <div class="panel-footer">
-                                <span class="pull-left">Firefox is the most used</span>
+                                <span class="pull-left">{{ data.max_browser }} is the most used</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -90,14 +90,14 @@
                                     <i class="fa fa-windows fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">6</div>
+                                    <div class="huge">{{ data.oses }}</div>
                                     <div>Different OS Used</div>
                                 </div>
                             </div>
                         </div>
                         <a href="/os-usage">
                             <div class="panel-footer">
-                                <span class="pull-left">Ubuntu is the most used</span>
+                                <span class="pull-left">{{ data.max_os }} is the most used</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>

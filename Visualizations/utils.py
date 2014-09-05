@@ -1,5 +1,6 @@
 import mongo_utils
 from collections import defaultdict
+from copy import copy
 
 
 def sum_api_paths(api_usage_data):
@@ -104,7 +105,7 @@ def get_api_response_times():
         api_response_data[record['api_path']].append(float(record['response_time']))
 
     for api_path, response_times in api_response_data.items():
-        api_response_data[api_path] = sum(response_times)/len(response_times)
+        api_response_data[api_path] = round((sum(response_times)/len(response_times)), 2)
 
     api_response_data = {'data': [{'api_path': api_path, 'avg_response_time': avg_response_time} for api_path, avg_response_time in api_response_data.items()]}  
     return api_response_data
@@ -117,7 +118,38 @@ def get_verb_response_times():
         verb_response_data[record['http_verb']].append(float(record['response_time']))
 
     for verb, response_times in verb_response_data.items():
-        verb_response_data[verb] = sum(response_times)/len(response_times)
+        verb_response_data[verb] = round((sum(response_times)/len(response_times)), 2)
 
     verb_response_data = {'data':[{'verb': verb, 'avg_response_time': avg_response_time} for verb, avg_response_time in verb_response_data.items()]}
     return verb_response_data
+
+
+def refresh_summary():
+    mongo_summary_data = mongo_utils.filter_records(['browser', 'OS', 'response_time'])
+    summary_data = {}
+    summary_data['requests'] = 0
+    summary_data['responses'] = []
+    browser_inter_data = defaultdict(int)
+    os_inter_data = defaultdict(int)
+    for record in mongo_summary_data:
+        browser_inter_data[record['browser'].lower().strip()] += 1
+        os_inter_data[record['OS'].lower().strip()] += 1
+        summary_data['requests'] += 1
+        summary_data['responses'].append(float(record['response_time']))
+
+    val = summary_data['responses']
+    summary_data['responses'] = round((sum(val)/len(val)), 2)
+
+    browser_inter = {}
+    summary_data['browsers'] = len(browser_inter_data)
+    for k, v in browser_inter_data.items():
+        browser_inter[v] = k
+    summary_data['max_browser'] = browser_inter[max(browser_inter)]
+
+    os_inter = {}
+    summary_data['oses'] = len(os_inter_data)
+    for k, v in os_inter_data.items():
+        os_inter[v] = k
+    summary_data['max_os'] = os_inter[max(os_inter)]
+
+    return summary_data

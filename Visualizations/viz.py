@@ -10,7 +10,8 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template('tl_index.html')
+    data = utils.refresh_summary()
+    return render_template('tl_index.html', data=data)
 
 
 @app.route("/api-usage")
