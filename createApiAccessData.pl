@@ -36,7 +36,7 @@ my(@apis) = ("vApp/power/action/powerOn", "vApp/power/action/powerOff", "vApp/po
 #offset by correct number of days
 my($timeStamp) = time() + $numDays * 3600 * 24;
 
-print "Generating data with initial timestamp:$timestamp and gapSeconds:$gapSeconds\n";
+#print "Generating data with initial timestamp:$timestamp and gapSeconds:$gapSeconds\n";
 for(my($i) = 0; $i < $ARGV[0]; $i++) {
 
 	$timeStamp += $gapSeconds;
@@ -58,15 +58,15 @@ for(my($i) = 0; $i < $ARGV[0]; $i++) {
 		$rt /= 10;
 	}
 
-	print "{\n";
+	print "{";
 
-	printf( "\"timestamp\":\"%d\"\n",$timeStamp);
-	print "\"browser\":\"$browser\"\n";
-	print "\"OS\":\"$OS\"\n";
-	print "\"http_verb\":\"$verb\"\n";
-	print "\"api_path\":\"http://localhost:8080/${api}\"\n";
-	print "\"client_ip\":\"0:0:0:0:0:0:0:1\"\n";
-	print "\"response_time\":\"$rt\"\n";
+	printf( "\"timestamp\":\"%d\", ",$timeStamp);
+	print "\"browser\":\"$browser\", ";
+	print "\"OS\":\"$OS\", ";
+	print "\"http_verb\":\"$verb\", ";
+	print "\"api_path\":\"${api}\", ";
+	print "\"client_ip\":\"0:0:0:0:0:0:0:1\", ";
+	print "\"response_time\":\"$rt\" ";
 
 	print "}\n";
 }
