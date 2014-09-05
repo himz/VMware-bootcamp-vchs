@@ -126,6 +126,16 @@ def get_verb_response_times():
 
 def refresh_summary():
     mongo_summary_data = mongo_utils.filter_records(['browser', 'OS', 'response_time'])
+    if not mongo_summary_data:
+        summary_data = {}
+        summary_data['requests'] = 0
+        summary_data['responses'] = '0.0'
+        summary_data['browsers'] = 0
+        summary_data['max_browser'] = 'Not IE'
+        summary_data['oses'] = 0
+        summary_data['max_os'] = 'Windows'
+        return summary_data
+
     summary_data = {}
     summary_data['requests'] = 0
     summary_data['responses'] = []
